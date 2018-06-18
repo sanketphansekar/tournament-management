@@ -1,0 +1,1 @@
+export const LOAD_MATCH_SUCCESS = 'LOAD_MATCH_SUCCESS';
