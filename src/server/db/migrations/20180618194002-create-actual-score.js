@@ -19,7 +19,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       winnerTeamId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'teams',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       },
       createdAt: {
         allowNull: false,

@@ -1,6 +1,7 @@
 import Express from 'express';
 
 import matchesController from '../controllers/matches';
+import usersController from '../controllers/users';
 
 const router = Express.Router();
 
@@ -9,8 +10,16 @@ router.get('/matches', (_req, res, next) =>
     .getAll()
     .then(result => res.status(200).send(result))
     .catch((err) => {
-      console.log(err);
       next(err);
     }));
+
+router.get('/users', (req, res, next) => {
+  usersController
+    .getAll()
+    .then(result => res.status(200).send(result))
+    .catch((err) => {
+      next(err);
+    });
+});
 
 export default router;

@@ -3,9 +3,12 @@ import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { find } from 'lodash';
 
 import Match from '../Match/Match';
 import Filter from '../Filter/index';
+
+import { getUsers } from '../../util/api';
 
 function getFilteredMatches(matches, filter) {
   switch (filter) {
@@ -13,7 +16,8 @@ function getFilteredMatches(matches, filter) {
       return matches;
     case 'TODAY':
       return matches.filter(item =>
-        moment.utc(item.date).isBetween(moment().startOf('day'), moment().endOf('day')));
+        moment.utc(item.date).isBetween(moment().startOf('day'), moment().endOf('day'))
+      );
     case 'PAST':
       return matches.filter(item => moment.utc(item.date).isBefore(moment()));
     case 'FUTURE':
@@ -37,15 +41,74 @@ function mapDispatchToProps() {
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      users: [],
+      predictedScores: []
+    };
   }
+
+  componentDidMount = () => {
+    let { matches } = this.props;
+    getUsers().then(users => {
+      this.setState({
+        users,
+        predictedScores: []
+      });
+    });
+  };
+
+  updatePredictedSocre = (userId, matchId, score, team) => {
+    console.log(userId, matchId, score, team);
+    let { matches } = this.props;
+    let { predictedScores } = this.state;
+    let { teamA, teamB } = find(matches, { id: matchId });
+    let isPresent = find(predictedScores, { matchId, userId });
+    let teamChosen = `${team}Score`;
+    if (!isPresent) {
+      predictedScores = [
+        ...predictedScores,
+        {
+          matchId,
+          userId,
+          [teamChosen]: score
+        }
+      ];
+    } else {
+      predictedScores = predictedScores.map(i => {
+        if (i.userId === userId && i.matchId === matchId) {
+          return {
+            ...i,
+            [teamChosen]: score,
+            winnerTeamId:
+              team === 'teamA'
+                ? score > teamB
+                  ? teamA.id
+                  : teamB.id
+                : score > teamA
+                  ? teamB.id
+                  : teamA.id
+          };
+        } else {
+          return i;
+        }
+      });
+    }
+
+    console.log(predictedScores);
+
+    this.setState({
+      predictedScores: predictedScores
+    });
+  };
+
   render() {
     const { matches } = this.props;
+    const { users } = this.state;
     return (
       <div>
         <Filter />
         <Row gutter={48}>
-          {matches.map((match) => {
+          {matches.map(match => {
             const { teamA, teamB } = match;
             match = {
               ...match,
@@ -54,7 +117,7 @@ class Home extends Component {
             };
             return (
               <Col key={match.id} span={12}>
-                <Match {...match} />
+                <Match {...match} users={users} updatePredictedSocre={this.updatePredictedSocre} />
               </Col>
             );
           })}

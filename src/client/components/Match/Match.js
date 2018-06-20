@@ -1,48 +1,56 @@
 import React from 'react';
 import moment from 'moment';
-import { Card, Row, Col, Form, InputNumber, Button, Radio } from 'antd';
+import { Card, Row, Col, InputNumber, Button } from 'antd';
+import PropTypes from 'prop-types';
 
-const FormItem = Form.Item;
-const RadioGroup = Radio.Group;
-const RadioButton = Radio.Button;
-
-const Match = ({ teamA, teamB, date }) => (
+const Match = ({
+  id: matchId, teamA, teamB, date, users, updatePredictedSocre
+}) => (
   <Card
     extra={moment(date).format('dddd, MMMM Do YYYY, h:mm:ss a')}
     title={`${teamA} vs ${teamB}`}
     style={{ width: '100%', marginBottom: '20px' }}
   >
-    <Form>
-      <Row gutter={24}>
-        <Col span={6}>Sanket Phansekar</Col>
-        <Col span={5}>
-          <FormItem>
-            <InputNumber placeholder={teamA} />
-          </FormItem>
-        </Col>
-        {/* <Col span={8}>
-          <FormItem>
-            <RadioGroup>
-              <RadioButton value="a">{teamA}</RadioButton>
-              <RadioButton value="b">{teamB}</RadioButton>
-            </RadioGroup>
-          </FormItem>
-        </Col> */}
-        <Col span={5}>
-          <FormItem>
-            <InputNumber placeholder={teamB} />
-          </FormItem>
-        </Col>
-      </Row>
-      <Button
-        disabled={!moment.utc(date).isBetween(moment().startOf('day'), moment().endOf('day'))}
-        type="primary"
-        style={{ alignSelf: 'center' }}
-      >
-        Submit
-      </Button>
-    </Form>
+    {users.map(user => (
+      <div key={user.id}>
+        <Row gutter={24}>
+          <Col span={8}>{user.name}</Col>
+          <Col span={8}>
+            <InputNumber
+              min={0}
+              placeholder={teamA}
+              onChange={(value) => {
+                updatePredictedSocre(user.id, matchId, value, 'teamA');
+              }}
+            />
+          </Col>
+          <Col span={8}>
+            <InputNumber
+              min={0}
+              placeholder={teamB}
+              onChange={(value) => {
+                updatePredictedSocre(user.id, matchId, value, 'teamB');
+              }}
+            />
+          </Col>
+        </Row>
+        <hr />
+      </div>
+    ))}
+
+    <Button type="primary" style={{ alignSelf: 'center' }}>
+      Submit
+    </Button>
   </Card>
 );
 
-export default Form.create()(Match);
+Match.propTypes = {
+  teamA: PropTypes.string.isRequired,
+  teamB: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  users: PropTypes.objectOf(PropTypes.object).isRequired,
+  id: PropTypes.string.isRequired,
+  updatePredictedSocre: PropTypes.func.isRequired
+};
+
+export default Match;
