@@ -3,18 +3,15 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import configureStore from './store/configureStore';
-import App from './App';
-import { loadMatches } from './components/Home/actions';
+import configureStore from '../shared/store/configureStore';
+import AppLayout from './components/AppLayout';
 
 const store = configureStore();
-
-store.dispatch(loadMatches());
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <AppLayout />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

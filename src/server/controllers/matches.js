@@ -1,3 +1,5 @@
+import uuidV4 from 'uuid/v4';
+
 import models from '../db/models';
 
 function getAll() {
@@ -19,6 +21,17 @@ function getAll() {
   });
 }
 
+function savePredictedScore(data) {
+  return models.sequelize.transaction((t) => {
+    const saveData = data.map(i => ({
+      ...i,
+      id: uuidV4()
+    }));
+    return models.predicted_score.bulkCreate(saveData, { transaction: t });
+  });
+}
+
 export default {
-  getAll
+  getAll,
+  savePredictedScore
 };

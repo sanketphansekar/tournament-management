@@ -22,4 +22,13 @@ router.get('/users', (req, res, next) => {
     });
 });
 
+router.post('/predicted-scores', (req, res, next) => {
+  matchesController
+    .savePredictedScore(req.body)
+    .then(result => res.status(200).send(result))
+    .catch((err) => {
+      next(err);
+    });
+});
+
 export default router;

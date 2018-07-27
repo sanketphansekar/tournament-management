@@ -11,7 +11,18 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              [
+                'import',
+                {
+                  libraryName: 'antd',
+                  style: 'css'
+                }
+              ]
+            ]
+          }
         }
       },
       {
@@ -31,13 +42,13 @@ module.exports = {
     hot: true,
     port: 3000,
     proxy: {
-      '/api': 'http://localhost:8080'
+      '/': 'http://localhost:8080'
     }
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html'
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: './public/index.html'
+    // }),
     new webpack.HotModuleReplacementPlugin()
   ]
 };

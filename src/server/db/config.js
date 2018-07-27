@@ -5,7 +5,8 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    seederStorage: 'sequelize'
+    seederStorage: 'sequelize',
+    operatorsAliases: false
   },
   production: {
     username: process.env.DB_USERNAME,

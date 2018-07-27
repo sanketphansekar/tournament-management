@@ -1,17 +1,13 @@
 {
-  "presets": ["env", "react", "stage-2"],
+  "presets": ["react", "stage-2",  "env"],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "plugins": [
-    [
-      "import",
-      {
-        "libraryName": "antd",
-        "libraryDirectory": "es",
-        "style": "css"
-      }
+    [	
+      "transform-class-properties"
     ]
   ]
 }

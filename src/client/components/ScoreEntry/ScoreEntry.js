@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'antd';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Promise from 'bluebird';
+import { Col, Row } from 'antd';
+import { connect } from 'react-redux';
 
-import Match from '../Match/Match';
-import Filter from '../Filter/index';
-
-import { loadMatches } from './actions';
-
-import { getUsers } from '../../util/api';
 import { getFilteredMatches } from '../../util/storeDataHelper';
+
+import Filter from '../Filter';
+import MatchScore from '../MatchScore/MatchScore';
 
 function mapStateToProps(state) {
   const { matches } = state;
@@ -20,39 +16,23 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps() {
-  return {
-    loadMatches: loadMatches
-  };
+  return {};
 }
 
-class Home extends Component {
+class ScoreEntry extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      users: [],
-      predictedScores: []
-    };
+    this.state = {};
   }
-
-  componentDidMount = () => {
-    Promise.all([this.props.loadMatches(), getUsers()]).then(([matches, users]) => {
-      this.setState({
-        users,
-        predictedScores: []
-      });
-    });
-  };
-
   render() {
     const { matches } = this.props;
-    const { users } = this.state;
     return (
       <div>
         <Filter />
         <Row gutter={48}>
-          {matches.map(match => {
+          {matches.map((match) => {
             const { teamA, teamB } = match;
-            match = {
+            const temp = {
               ...match,
               teamA: teamA ? teamA.name : 'TBD',
               teamB: teamB ? teamB.name : 'TBD',
@@ -61,7 +41,7 @@ class Home extends Component {
             };
             return (
               <Col key={match.id} span={12}>
-                <Match {...match} users={users} />
+                <MatchScore {...temp} />
               </Col>
             );
           })}
@@ -71,15 +51,11 @@ class Home extends Component {
   }
 }
 
-Home.defaultProps = {
-  matches: []
-};
-
-Home.propTypes = {
-  matches: PropTypes.arrayOf(PropTypes.object)
+ScoreEntry.propTypes = {
+  matches: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(ScoreEntry);
