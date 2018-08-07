@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sanketphansekar/tournament-management.svg?branch=master)](https://travis-ci.org/sanketphansekar/tournament-management)
+
 # Tournament Management web application
 
 Software allows admin to update scores of matches and allocate points to users who have predicted the score.
