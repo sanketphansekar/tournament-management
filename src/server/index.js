@@ -2,7 +2,6 @@ import Express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
-import { matchPath } from 'react-router-dom';
 import path from 'path';
 
 import Layout from '../client/components/AppLayout';
@@ -15,8 +14,10 @@ const app = Express();
 app.use(Express.static('dist'));
 app.use(Express.json());
 
+app.use('/api', routes);
+
 // set the view engine to ejs
-app.set('views', path.join(__dirname, '/src/server/views'));
+app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
 app.use((req, res) => {
@@ -36,5 +37,4 @@ app.use((req, res) => {
   }
 });
 
-app.use('/api', routes);
 app.listen(8080);

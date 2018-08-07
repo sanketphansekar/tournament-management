@@ -7,7 +7,7 @@
     "eslint": "eslint client server",
     "test": "mocha ./src/server/test",
     "dev:client": "webpack-dev-server",
-    "start": "nodemon  --exec babel-node ./src/server/index.js",
+    "start": "nodemon --watch src/server  --exec babel-node ./src/server/index.js",
     "dev": "run-p start dev:client",
     "apiDoc": "apidoc -i src/server/ -o apidoc/"
   },

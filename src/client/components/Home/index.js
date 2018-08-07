@@ -19,9 +19,11 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    loadMatches: loadMatches
+    loadMatches: () => {
+      dispatch(loadMatches())
+    }
   };
 }
 
@@ -34,14 +36,16 @@ class Home extends Component {
     };
   }
 
-  componentDidMount = () => {
-    Promise.all([this.props.loadMatches(), getUsers()]).then(([matches, users]) => {
+  componentDidMount() {
+    this.props.loadMatches();
+
+    getUsers().then((users) => {
       this.setState({
         users,
         predictedScores: []
       });
     });
-  };
+  }
 
   render() {
     const { matches } = this.props;
@@ -50,7 +54,7 @@ class Home extends Component {
       <div>
         <Filter />
         <Row gutter={48}>
-          {matches.map(match => {
+          {matches.map((match) => {
             const { teamA, teamB } = match;
             match = {
               ...match,

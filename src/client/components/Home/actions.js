@@ -9,8 +9,7 @@ export function loadMatchesSuccess(matches) {
 }
 
 export function loadMatches() {
-  return dispatch =>
-    getAllMatches()
-      .then(matches => dispatch(loadMatchesSuccess(matches)))
-      .catch();
+  return (dispatch) => {
+    getAllMatches().then(matches => dispatch(loadMatchesSuccess(matches)));
+  };
 }
