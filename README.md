@@ -4,7 +4,7 @@ Software allows admin to update scores of matches and allocate points to users w
 
 ## Configuration
 
-Create .env file and specify your environment variables
+Create .env file and specify your environment variables.
 
 ## DB creation and migration
 
