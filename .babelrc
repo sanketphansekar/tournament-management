@@ -1,13 +1,5 @@
 {
-  "presets": ["react", "stage-2",  "env"],
-  "env": {
-    "browser": true,
-    "node": true,
-    "mocha": true
-  },
-  "plugins": [
-    [	
-      "transform-class-properties"
-    ]
-  ]
+  "presets": ["env", "react", "stage-2"],
+
+  "plugins": [["transform-class-properties"]]
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Promise from 'bluebird';
 
 import Match from '../Match/Match';
 import Filter from '../Filter/index';

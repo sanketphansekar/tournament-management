@@ -4,15 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import configureStore from '../shared/store/configureStore';
-import AppLayout from './components/AppLayout';
+import App from './App';
 
 const store = configureStore();
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>
-      <AppLayout />
+      <App />
     </BrowserRouter>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('app')
 );

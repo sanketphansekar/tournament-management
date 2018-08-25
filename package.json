@@ -6,8 +6,8 @@
   "scripts": {
     "eslint": "eslint client server",
     "test": "mocha ./src/server/test",
-    "dev:client": "webpack-dev-server",
-    "start": "nodemon --watch src/server  --exec babel-node ./src/server/index.js",
+    "dev:client": "webpack",
+    "start": "nodemon --exec babel-node ./src/server/index.js",
     "dev": "run-p start dev:client",
     "apiDoc": "apidoc -i src/server/ -o apidoc/"
   },
@@ -21,7 +21,7 @@
     "manangement"
   ],
   "author": "Sanket Phansekar<sanket.phansekar@outlook.com>",
-  "license": "GPL",
+  "license": "GPL-3.0-only",
   "dependencies": {
     "antd": "^3.7.0",
     "axios": "^0.18.0",
@@ -39,6 +39,7 @@
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
+    "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
@@ -67,6 +68,7 @@
     "eslint-plugin-react": "^7.9.1",
     "html-webpack-plugin": "^3.2.0",
     "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.4.1",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.3",
     "npm-run-all": "^4.1.3",

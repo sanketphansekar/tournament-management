@@ -1,5 +1,4 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   watch: true,
@@ -13,42 +12,41 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            plugins: [
-              [
-                'import',
-                {
-                  libraryName: 'antd',
-                  style: 'css'
-                }
-              ]
-            ]
+            plugins: [['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }]]
           }
         }
       },
       {
         test: /\.less$/,
-        loader: 'less-loader',
-        options: {
-          javascriptEnabled: true
-        }
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },
-  devServer: {
-    hot: true,
-    port: 3000,
-    proxy: {
-      '/': 'http://localhost:8080'
-    }
-  },
   plugins: [
     // new HtmlWebpackPlugin({
-    //   template: './public/index.html'
+    //   template: './src/server/views/index.html'
     // }),
-    new webpack.HotModuleReplacementPlugin()
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: 'main.css'
+    })
   ]
 };

@@ -14,38 +14,38 @@ class Match extends Component {
     this.state = {};
   }
 
-  saveScoreInDb = values => {
-    let { id: matchId, teamAId, teamBId } = this.props;
+  saveScoreInDb(values) {
+    const { id: matchId, teamAId, teamBId } = this.props;
     let saveArr = [];
 
     each(values, (value, key) => {
-      // [0] index will have userId and [1] index will have respective team score eg. ${id}#teamAScore : 1
-      let [userId, teamName] = key.split('#');
-      let index = findIndex(saveArr, { userId });
-      if (index === -1)
+      // [0] index will have userId and [1] index will have respective
+      // team score eg. ${id}#teamAScore : 1
+      const [userId, teamName] = key.split('#');
+      const index = findIndex(saveArr, { userId });
+      if (index === -1) {
         saveArr.push({
           matchId,
           userId,
           [`${teamName}Score`]: value
         });
-      else
+      } else {
         saveArr[index] = {
           ...saveArr[index],
           [`${teamName}Score`]: value
         };
+      }
     });
 
-    saveArr = saveArr.map(i => {
-      return i.teamAScore > i.teamBScore
-        ? {
-            ...i,
-            winnerTeamId: teamAId
-          }
-        : {
-            ...i,
-            winnerTeamId: teamBId
-          };
-    });
+    saveArr = saveArr.map(i => (i.teamAScore > i.teamBScore
+      ? {
+        ...i,
+        winnerTeamId: teamAId
+      }
+      : {
+        ...i,
+        winnerTeamId: teamBId
+      }));
 
     const hide = message.loading('Action in progress..', 0);
 
@@ -55,10 +55,12 @@ class Match extends Component {
         message.success('Saved successfully!');
       });
     });
-  };
+  }
 
   render() {
-    const { teamA, teamB, date, users } = this.props;
+    const {
+      teamA, teamB, date, users
+    } = this.props;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -69,7 +71,7 @@ class Match extends Component {
         style={{ width: '100%', marginBottom: '20px' }}
       >
         <Form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             this.props.form.validateFieldsAndScroll((err, values) => {
               if (err) {
@@ -80,7 +82,7 @@ class Match extends Component {
             });
           }}
         >
-          {users.map(user => {
+          {users.map((user) => {
             const prefix = `${user.id}`;
             return (
               <div key={user.id}>
@@ -99,14 +101,12 @@ class Match extends Component {
                             message: 'Score not filled'
                           }
                         ]
-                      })(
-                        <InputNumber
-                          style={{ width: '100%' }}
-                          min={0}
-                          max={50}
-                          placeholder={teamA}
-                        />
-                      )}
+                      })(<InputNumber
+                        style={{ width: '100%' }}
+                        min={0}
+                        max={50}
+                        placeholder={teamA}
+                      />)}
                     </FormItem>
                   </Col>
                   <Col span={8}>

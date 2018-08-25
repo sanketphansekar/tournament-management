@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
-
-import App from '../App';
+import { renderRoutes } from 'react-router-config';
 
 const { Header, Content, Footer } = Layout;
 
@@ -44,7 +43,7 @@ export default class AppLayout extends Component {
         </Header>
         <Content style={{ padding: '30px 30px 0 30px' }}>
           <div style={{ padding: 24, minHeight: '70vh' }}>
-            <App />
+            {renderRoutes(this.props.route.routes)}
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
