@@ -9,7 +9,9 @@
     "dev:client": "webpack",
     "start": "nodemon --exec babel-node ./src/server/index.js",
     "dev": "run-p start dev:client",
-    "apiDoc": "apidoc -i src/server/ -o apidoc/"
+    "apiDoc": "apidoc -i src/server/ -o apidoc/",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -45,7 +47,8 @@
     "redux-thunk": "^2.3.0",
     "sequelize": "^4.37.10",
     "uuid": "^3.3.2",
-    "winston": "^3.0.0"
+    "winston": "^3.0.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "apidoc": "^0.17.6",
@@ -77,5 +80,6 @@
     "webpack": "^4.16.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.4"
-  }
+  },
+  "snyk": true
 }
