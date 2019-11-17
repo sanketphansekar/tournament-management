@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/sanketphansekar/tournament-management.svg?branch=master)](https://travis-ci.org/sanketphansekar/tournament-management)
 
-# Tournament Management web application
+# Tournament Management web app
 
 Software allows admin to update scores of matches and allocate points to users who have predicted the score.
 
@@ -29,4 +29,4 @@ npm i
 npm run dev
 ```
 
-Server will be running on port 3000
+Server will be running on port 3000.
