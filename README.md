@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sanketphansekar/tournament-management.svg?branch=master)](https://travis-ci.org/sanketphansekar/tournament-management)
+[![Build Status](https://travis-ci.com/sanketphansekar/tournament-management.svg?branch=master)](https://travis-ci.com/sanketphansekar/tournament-management)
 
 # Tournament Management web app
 
